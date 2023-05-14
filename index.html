@@ -8,7 +8,6 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		
 		<script src="three.min.js"></script>
-		<script src="WebGL.js"></script>
 		<script src="vax.js"></script>
 	</head>
 	
@@ -24,11 +23,17 @@
 
 			var geometry = new THREE.OctahedronGeometry( 1 );
 
+            var containerGeometry = new THREE.BoxGeometry(3000,3000,3000);
+            var containerMaterial = new THREE.MeshLambertMaterial({color: 0xff0000, side: THREE.DoubleSide});
+            var containerMesh = new THREE.Mesh(containerGeometry,containerMaterial);
+
+            scene.add(containerMesh);
+
 			var n = 300;
 			var objects = [];
 			for( var i=0; i<n; i++)
 			{
-				var material = new THREE.MeshLambertMaterial( {color: "red", transparent:true, opacity:0.5} ),
+				var material = new THREE.MeshLambertMaterial( {color: "blue", transparent:true, opacity:0.5} ),
 					mesh = new THREE.Mesh( geometry, material );
 					
 				mesh.scale.set( 20, 40, 20 );
