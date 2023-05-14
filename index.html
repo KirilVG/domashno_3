@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>dom 3</title>
+		<meta charset="utf-8">
+		
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		
+		<script src="three.min.js"></script>
+		<script src="WebGL.js"></script>
+		<script src="vax.js"></script>
+	</head>
+	
+	<body>	
+		<script>		
+			vaxInit( {antialias:true, alpha:true} );
+			
+			camera = new THREE.PerspectiveCamera( 27, window.innerWidth/window.innerHeight, 400, 3000 );
+			camera.position.set( 0, 0, 0 );
+			camera.lookAt( new THREE.Vector3( 0, 0, -1 ) );
+
+			light.position.set( 0, 0, 0 );
+
+			var geometry = new THREE.OctahedronGeometry( 1 );
+
+			var n = 300;
+			var objects = [];
+			for( var i=0; i<n; i++)
+			{
+				var material = new THREE.MeshLambertMaterial( {color: "red", transparent:true, opacity:0.5} ),
+					mesh = new THREE.Mesh( geometry, material );
+					
+				mesh.scale.set( 20, 40, 20 );
+				
+				var r = THREE.MathUtils.randFloat(1000,3000),
+					a = THREE.MathUtils.randFloat(0,2*Math.PI),
+					b = THREE.MathUtils.randFloat(Math.PI/4,Math.PI/1.8);
+				mesh.position.setFromSphericalCoords( r, b, a );
+				
+				objects.push( mesh );
+				scene.add( mesh );
+			}
+
+			function animate( t )
+			{
+				for( var i=0; i<n; i++ )
+					objects[i].rotation.y = t+i;
+			}
+			
+			window.addEventListener( "deviceorientation", deviceOrientation, true);
+			
+			function deviceOrientation( event )
+			{
+				// взимаме ъглите
+				var alpha = event.alpha,
+					gamma = event.gamma;
+
+				if( alpha === null ) return;
+				
+				// поправяме ги, за да ни е удобно
+				if( gamma>=0 )
+					gamma = 90-gamma;
+				else
+				{
+					alpha = alpha+180;
+					gamma = -90-gamma;
+				}
+									
+				// правим ги на радиани
+				alpha = THREE.MathUtils.degToRad( alpha );
+				gamma = THREE.MathUtils.degToRad( gamma );
+				
+				// въртим камерата
+				camera.rotation.set( gamma, alpha, 0, 'YXZ' );
+			}
+
+		</script>
+	</body>
+</html>
+
+
