@@ -9,15 +9,12 @@
 		
 		<script src="three.min.js"></script>
 		<script src="vax.js"></script>
+        <script src="StereoEffect.js"></script>
 	</head>
 	
 	<body>	
 		<script>		
-			vaxInit( {antialias:true, alpha:true} );
-			
-			camera = new THREE.PerspectiveCamera( 27, window.innerWidth/window.innerHeight, 400, 3000 );
-			camera.position.set( 0, 0, 0 );
-			camera.lookAt( new THREE.Vector3( 0, 0, -1 ) );
+			vaxInitParallax( 3 );
 
 			light.position.set( 0, 0, 0 );
 

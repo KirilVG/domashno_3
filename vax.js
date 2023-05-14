@@ -1,12 +1,12 @@
 /**
  * FMI VR/AR/XR Library
- * 2022-04-07
+ * 2022-03-22
  * v 0.006
  *
  * perspective		флаг (true/false) дали да се ползва
  *					перспектива или да не се ползва
  *
- * vaxInit(opt)		инициализира моно режим и поддържа
+ * vaxInit()		инициализира моно режим и поддържа
  *					анимационен цикъл с animate()
  *
  * vaxInitAnaglyph() инициализира на анаглифен режим и
@@ -15,7 +15,7 @@
  * vaxInitParallax(eyeSep) инициализира на паралаксен режим
  *					и поддържа анимационен цикъл с animate()
  *
- * vaxSceneInit()	инициализира и създава сцена със земя
+ * vaxSceneInit( vaxInit, vaxParam ) инициализира и създава сцена със земя
  *
  * animate(t,dT)	потребителска функция, която генерира нов
  *					кадър; извиква се автоматично
@@ -29,9 +29,9 @@
 var renderer, scene, camera, light, stats, t, animate, perspective = true;
 
 
-function vaxInit( rendererOptions = {antialias:true} )
+function vaxInit()
 {
-	renderer = new THREE.WebGLRenderer( rendererOptions );
+	renderer = new THREE.WebGLRenderer( {antialias: true} );
 	document.body.appendChild( renderer.domElement );
 	document.body.style.margin = 0;
 	document.body.style.overflow = 'hidden';
@@ -48,15 +48,8 @@ function vaxInit( rendererOptions = {antialias:true} )
 	else
 		scene = new THREE.Scene();
 
-	if( rendererOptions.alpha )
-	{
-		renderer.setClearColor( 0, 0 );
-	}
-	else
-	{
-		scene.background = new THREE.Color('white');
-	}
-	
+	scene.background = new THREE.Color('white');
+
 	if(	perspective )
 		camera = new THREE.PerspectiveCamera( 60, 1, 1, 1000 );
 	else
@@ -220,9 +213,9 @@ function frameAnaglyph( time )
 
 
 // Общи настройки на сцената
-function vaxSceneInit()
+function vaxSceneInit( vax = vaxInit, vatInitParam = 0 )
 {
-	vaxInit();
+	vax( vatInitParam );
 	
 	// включваме сенки
 	renderer.shadowMap.enabled = true;
