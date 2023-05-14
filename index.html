@@ -21,10 +21,10 @@
 
 			light.position.set( 0, 0, 0 );
 
-			var geometry = new THREE.ConeGeometry(1,2);
+			var geometry = new THREE.ConeGeometry(1,4);
 
             var containerGeometry = new THREE.BoxGeometry(3000,3000,3000);
-            var containerMaterial = new THREE.MeshLambertMaterial({color: 0xff0000, side: THREE.DoubleSide});
+            var containerMaterial = new THREE.MeshLambertMaterial({ color: 0xc9c9ff, side: THREE.DoubleSide});
             var containerMesh = new THREE.Mesh(containerGeometry,containerMaterial);
 
             scene.add(containerMesh);
@@ -33,7 +33,7 @@
 			var objects = [];
 			for( var i=0; i<n; i++)
 			{
-				var material = new THREE.MeshLambertMaterial( {color: "blue", transparent:true, opacity:0.5} ),
+				var material = new THREE.MeshLambertMaterial( {color: 0x733e98} ),
 					mesh = new THREE.Mesh( geometry, material );
 					
 				mesh.scale.set( 20, 20, 20 );
