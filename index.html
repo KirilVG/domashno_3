@@ -36,9 +36,9 @@
 				var material = new THREE.MeshLambertMaterial( {color: "blue", transparent:true, opacity:0.5} ),
 					mesh = new THREE.Mesh( geometry, material );
 					
-				mesh.scale.set( 20, 40, 20 );
+				mesh.scale.set( 20, 20, 20 );
 				
-				var r = THREE.MathUtils.randFloat(1000,3000),
+				var r = THREE.MathUtils.randFloat(1000,1500),
 					a = THREE.MathUtils.randFloat(0,2*Math.PI),
 					b = THREE.MathUtils.randFloat(Math.PI/4,Math.PI/1.8);
 				mesh.position.setFromSphericalCoords( r, b, a );
