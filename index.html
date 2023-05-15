@@ -95,18 +95,19 @@
 				if( gamma === null ) alert("greshka");
 
 				
-				if( gamma>=0 )
+				if( gamma>=0 ) {
 					gamma = 90-gamma;
-				else
-				{
+					alert(`A y-${THREE.MathUtils.degToRad( gamma )} x-${THREE.MathUtils.degToRad( alpha )}`);
+				}
+				else {
 					alpha = alpha+180;
 					gamma = -90-gamma;
+					alert(`B y-${THREE.MathUtils.degToRad( gamma )} x-${THREE.MathUtils.degToRad( alpha )}`);
 				}
 									
 				alpha = THREE.MathUtils.degToRad( alpha );
 				gamma = THREE.MathUtils.degToRad( gamma );
 				
-				// въртим камерата
 				camera.rotation.set( gamma, alpha, 0, 'YXZ' );
 			}
 
