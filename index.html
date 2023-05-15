@@ -14,53 +14,87 @@
 	
 	<body>	
 		<script>		
-			vaxInitParallax( 3 );
+			vaxInitParallax( 2 );
 
 			light.position.set( 0, 0, 0 );
 
-			var geometry = new THREE.ConeGeometry(1,4);
-
-            var containerGeometry = new THREE.BoxGeometry(3000,3000,3000);
+			var coneGeometry = new THREE.ConeGeometry(1,1);
+			var containerGeometry = new THREE.BoxGeometry(3000,3000,3000);
             var containerMaterial = new THREE.MeshLambertMaterial({ color: 0xc9c9ff, side: THREE.DoubleSide});
+			var coneMaterial = new THREE.MeshLambertMaterial( {color: 0x733e98} );
             var containerMesh = new THREE.Mesh(containerGeometry,containerMaterial);
 
             scene.add(containerMesh);
 
-			var n = 300;
+			var conesNumber = 300;
 			var objects = [];
-			for( var i=0; i<n; i++)
+			for( var i=0; i<conesNumber; i++)
 			{
-				var material = new THREE.MeshLambertMaterial( {color: 0x733e98} ),
-					mesh = new THREE.Mesh( geometry, material );
+				var coneMesh = new THREE.Mesh( coneGeometry, coneMaterial );
 					
-				mesh.scale.set( 20, 20, 20 );
+				coneMesh.scale.set( 50, 200, 50 );
 				
-				var r = THREE.MathUtils.randFloat(1000,1500),
-					a = THREE.MathUtils.randFloat(0,2*Math.PI),
-					b = THREE.MathUtils.randFloat(Math.PI/4,Math.PI/1.8);
-				mesh.position.setFromSphericalCoords( r, b, a );
-				
-				objects.push( mesh );
-				scene.add( mesh );
-			}
+				var wall = Math.floor(Math.random()*6);
 
-			function animate( t )
-			{
-				for( var i=0; i<n; i++ )
-					objects[i].rotation.y = t+i;
+				var x;
+				var y;
+				var z;
+
+
+				switch (wall) {
+  					case 0:
+    					x = 1500;
+						y = THREE.MathUtils.randFloat(-1500,1500);
+						z = THREE.MathUtils.randFloat(-1500,1500);
+						break;
+					case 1:
+    					x = -1500;
+						y = THREE.MathUtils.randFloat(-1500,1500);
+						z = THREE.MathUtils.randFloat(-1500,1500);
+						break;
+					case 2:
+    					x = THREE.MathUtils.randFloat(-1500,1500);
+						y = 1500;
+						z = THREE.MathUtils.randFloat(-1500,1500);
+						break;
+					case 3:
+						x = THREE.MathUtils.randFloat(-1500,1500);
+						y = -1500;
+						z = THREE.MathUtils.randFloat(-1500,1500);
+						break;
+					case 4:
+    					x = THREE.MathUtils.randFloat(-1500,1500);
+						y = THREE.MathUtils.randFloat(-1500,1500);
+						z = 1500;
+						break;
+					case 5:
+						x = THREE.MathUtils.randFloat(-1500,1500);
+						y = THREE.MathUtils.randFloat(-1500,1500);
+						z = -1500;
+						break;
+ 					default:
+    					alert("greshnastena " + wall);
+				}
+
+				coneMesh.position.set(x,y,z);
+				
+				objects.push( coneMesh );
+				scene.add( coneMesh );
 			}
 			
 			window.addEventListener( "deviceorientation", deviceOrientation, true);
 			
 			function deviceOrientation( event )
 			{
-				// взимаме ъглите
-				var alpha = event.alpha,
-					gamma = event.gamma;
+				var alpha = event.alpha;
 
-				if( alpha === null ) return;
+				if( alpha === null ) alert("greshka");
+
+				var gamma = event.gamma;
+
+				if( gamma === null ) alert("greshka");
+
 				
-				// поправяме ги, за да ни е удобно
 				if( gamma>=0 )
 					gamma = 90-gamma;
 				else
@@ -69,7 +103,6 @@
 					gamma = -90-gamma;
 				}
 									
-				// правим ги на радиани
 				alpha = THREE.MathUtils.degToRad( alpha );
 				gamma = THREE.MathUtils.degToRad( gamma );
 				
