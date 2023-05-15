@@ -83,6 +83,10 @@
 			}
 			
 			window.addEventListener( "deviceorientation", deviceOrientation, true);
+
+			var previousLetter;
+			var previousGamma;
+			var previousAlpha;
 			
 			function deviceOrientation( event )
 			{
@@ -95,14 +99,52 @@
 				if( gamma === null ) alert("greshka");
 
 				
-				if( gamma>=0 ) {
+				if( gamma >= 0 ) {
 					gamma = 90-gamma;
-					alert(`A y-${ gamma } x-${alpha }`);
+					if(!previousLetter){
+						previousLetter = 'A';
+						previousGamma = gamma;
+						previousAlpha = alpha;
+					} else {
+						if(previousLetter != 'A'){
+							if(Math.abs(previousGamma-gamma)<30){
+								previousLetter = 'A';
+								previousGamma = gamma;
+								previousAlpha = alpha;
+							} else {
+								alpha = previousAlpha;
+								gamma = previousGamma;
+							}
+						} else {
+							previousGamma = gamma;
+							previousAlpha = alpha;
+						}
+					}
+					//alert(`A y-${ gamma } x-${alpha }`);
 				}
 				else {
 					alpha = alpha+180;
 					gamma = -90-gamma;
-					alert(`B y-${ gamma } x-${alpha }`);
+					if(!previousLetter){
+						previousLetter = 'A';
+						previousGamma = gamma;
+						previousAlpha = alpha;
+					} else {
+						if(previousLetter != 'B'){
+							if(Math.abs(previousGamma-gamma)<30){
+								previousLetter = 'B';
+								previousGamma = gamma;
+								previousAlpha = alpha;
+							} else {
+								alpha = previousAlpha;
+								gamma = previousGamma;
+							}
+						} else {
+							previousGamma = gamma;
+							previousAlpha = alpha;
+						}
+					}
+					//alert(`B y-${ gamma } x-${alpha }`);
 				}
 									
 				alpha = THREE.MathUtils.degToRad( alpha );
