@@ -97,12 +97,12 @@
 				
 				if( gamma>=0 ) {
 					gamma = 90-gamma;
-					alert(`A y-${THREE.MathUtils.degToRad( gamma )} x-${THREE.MathUtils.degToRad( alpha )}`);
+					alert(`A y-${ gamma } x-${alpha }`);
 				}
 				else {
 					alpha = alpha+180;
 					gamma = -90-gamma;
-					alert(`B y-${THREE.MathUtils.degToRad( gamma )} x-${THREE.MathUtils.degToRad( alpha )}`);
+					alert(`B y-${ gamma } x-${alpha }`);
 				}
 									
 				alpha = THREE.MathUtils.degToRad( alpha );
